@@ -43,7 +43,7 @@ app.post("/api/getData", upload.single("file"), async (req, res) => {
                 },
             },
 
-            { text: "If the Sent file is a time table generate a js object of it with days as keys and each hour represent by index from 0 to 7,else return an empty object and Return ONLY a valid JSON object. Do not include explanations or text.." },
+            { text: "If the Sent file only a time table generate a js object of it with days as keys and each hour represent by index from 0 to 7,else return an empty object even its a calender or a streak calender and Return ONLY a valid JSON object. Do not include explanations or text.." },
 
         ]);
 
@@ -56,7 +56,7 @@ app.post("/api/getData", upload.single("file"), async (req, res) => {
         try {
             jsonResponse = JSON.parse(rawText);
         } catch (err) {
-            console.error("❌ Failed to parse JSON:", rawText);
+            console.error("Failed to parse JSON:", rawText);
             jsonResponse = {};
         }
 
@@ -71,5 +71,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(8000, () => {
-    console.log("✅ PORT IS RUNNING AT http://localhost:8000");
+    console.log("PORT IS RUNNING AT http://localhost:8000");
 });
