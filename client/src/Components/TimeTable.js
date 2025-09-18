@@ -13,7 +13,7 @@ export default function TimeTable(){
     });
 
     const data=await response.json();
-
+    localStorage.setItem("timetable",JSON.stringify(data.response));
     console.log(data.response);
 
   }
