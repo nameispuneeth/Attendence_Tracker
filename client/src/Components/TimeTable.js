@@ -1,49 +1,97 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 export default function TimeTable(){
-  const [File,setFile]=useState(null);
-  const HandleSubmit=async(e)=>{
-    e.preventDefault();
-    if(!File) return;
-    const formData = new FormData();
-    formData.append("file", File);
+    const [TimeTable,setTimeTable]=useState(Array.from({length:6},()=>Array(8).fill("")));
+    const Days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    const [subjects,setSubjects]=useState(Array(10).fill(""));
+    const colors = [
+        "bg-blue-300 text-gray-700",
+  "bg-yellow-200 text-gray-700",
+      "bg-green-300 text-gray-700",
+  "bg-orange-200 text-gray-700",
+  "bg-purple-200 text-gray-700",
+  "bg-pink-200 text-gray-700",
+      "bg-indigo-200 text-gray-700",
+  "bg-teal-200 text-gray-700",
+  "bg-lime-200 text-gray-700",
+  "bg-red-200 text-gray-700",
 
-    const response=await fetch("http://localhost:8000/api/getData",{
-      method:"POST",
-      body:formData
-    });
+  
+  
+];
+    const ChangeVal=(rInd,cInd,val)=>{
+      setTimeTable((prev)=>
+        prev.map((row,rowInd)=>
+          (rInd===rowInd)?row.map((data,colInd)=>
+            (cInd===colInd)?val:data
+          ):row
+        )
+      ) 
+    }
+    useEffect(()=>{
+     
+      if(sessionStorage.getItem("timetable")){
+        const oldTimeTable=JSON.parse(sessionStorage.getItem("timetable"));
+        const DaysInd=new Map();
+        for(let i=0;i<6;i++){
+          DaysInd.set(Days[i].toUpperCase(),i);
+        }
+        const newSubjects=new Set();
+        let NewTimeTableState= Array.from({length:6},()=>Array(8).fill(""));
+        for(let [day,dayperiods] of Object.entries(oldTimeTable)){
+          const dayind=DaysInd.get(day);
+          for(let period in dayperiods){
+            if(dayperiods[period]!==null){
+              NewTimeTableState[dayind][period]=dayperiods[period];
+              newSubjects.add(dayperiods[period])
+            }
+          }
+        }
+        setSubjects([...newSubjects]);
+        setTimeTable(NewTimeTableState);
+      }
+      else if(sessionStorage.getItem("subjects")){
+        setSubjects(JSON.parse(sessionStorage.getItem("subjects")));
+      }
+    },[]);
+    const getSelectColor = (val) => {
+    if(val==="") return "bg-gray-100 text-gray-700";
+    const ind = subjects.indexOf(val);
+    return colors[ind];
+  };
+ 
 
-    const data=await response.json();
-    localStorage.setItem("timetable",JSON.stringify(data.response));
-    console.log(data.response);
+    return(
+        <div className="p-5 h-screen flex flex-col space-y-10 justify-center items-center bg-gray-700">
+        <table className="border-2 border-collapse border-gray-400 rounded">
+          <tr>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-700 text-white"> Day/Period </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 1 </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 2 </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 3 </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 4 </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 5 </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 6 </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 7 </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 8 </th>
+          </tr>
+            {TimeTable.map((row,rInd)=>(
+              <tr key={rInd}>
+                <td key={rInd} className="border border-gray-400 w-32 h-16 text-center font-medium bg-gray-800 text-white">{Days[rInd]}</td>
+                {row.map((val,cInd)=>(
+                  <td key={cInd} className={`border w-32 h-16 text-center font-normal ${getSelectColor(val)} border-gray-400`}>
+                    <select value={val} onChange={(e)=>ChangeVal(rInd,cInd,e.target.value)} key={cInd} className={`w-full h-full text-center bg-transparent appearance-none outline-none border-0`}>
+                      <option value="">Leisure</option>
+                      {subjects.map((sub,ind)=>(
+                        <option key={ind} value={sub}>{sub}</option>
+                      ))}
 
-  }
-  return(
-     <div className="h-screen bg-gray-700 flex justify-center items-center">
-      <form
-        onSubmit={HandleSubmit}
-        className="flex flex-col space-y-6 bg-white p-6 rounded-2xl shadow-md"
-      >
-        <input
-          type="file"
-          accept="image/*,.pdf,.xlsx"
-          onChange={(e) => setFile(e.target.files[0])}
-          className="block w-full text-sm text-gray-700 
-                     file:mr-4 file:py-2 file:px-4
-                     file:rounded-lg file:border-0
-                     file:text-sm file:font-semibold
-                     file:bg-blue-600 file:text-white
-                     hover:file:bg-blue-700 cursor-pointer"
-        />
-
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-green-600 text-white 
-                     rounded-lg font-medium shadow-md
-                     hover:bg-green-700 transition duration-200"
-        >
-          Upload & Analyze
-        </button>
-      </form>
-    </div>
-  )
+                    </select>
+                  </td>
+                ))}
+              </tr>
+            ))}
+        </table>
+        <button className="bg-gray-800 text-white p-3 rounded text-base font-medium">Submit</button>
+        </div>
+    )
 }

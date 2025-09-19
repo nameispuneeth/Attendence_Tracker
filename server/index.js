@@ -43,7 +43,7 @@ app.post("/api/getData", upload.single("file"), async (req, res) => {
                 },
             },
 
-            { text: "If the Sent file only a time table generate a js object of it with days as keys and each hour represent by index from 0 to 7,else return an empty object even its a calender or a streak calender and Return ONLY a valid JSON object. Do not include explanations or text.." },
+            { text: "If the image represents a single school/college timetable (with subjects, classes, or lectures),generate a JSON object with days as keys and 8 length array as value where each index in that array represents the class in that period.If the image is a calendar, streak tracker, progress chart, attendance sheet, or anything else,return exactly `{}` (an empty JSON object). Do not interpret generic grids as a timetable.Return ONLY valid JSON." },
 
         ]);
 
@@ -59,7 +59,6 @@ app.post("/api/getData", upload.single("file"), async (req, res) => {
             console.error("Failed to parse JSON:", rawText);
             jsonResponse = {};
         }
-
         res.json({ response: jsonResponse });
     } catch {
         res.send({ status: 'error', error: 'Network Issues' })
