@@ -11,6 +11,7 @@ export default function CurrAttendence() {
             </div>
         );
     }
+    //Had To TimeTable Using DS
     // useEffect(() => {
     //     const functionCall = async () => {
     //         const timetable = JSON.parse(sessionStorage.getItem("timetable"));
