@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 
 export default function CurrAttendence() {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [loading, setloading] = useState(false);
     let Spinner = () => {
         return (
@@ -32,7 +32,7 @@ export default function CurrAttendence() {
     //         const resp=await data.json();
     //         console.log(resp.data);
     //     }
-    
+
     //     functionCall()
     //     setloading(false);
 

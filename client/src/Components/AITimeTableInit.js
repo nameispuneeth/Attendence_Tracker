@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
-export default function Home() {
+export default function AiTimeTableInit() {
   const [loading, setloading] = useState(false);
   let Spinner = () => {
     return (

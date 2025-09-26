@@ -57,6 +57,7 @@ export default function TimeTable() {
       setSubjects(JSON.parse(sessionStorage.getItem("subjects")));
     }
   }, [navigate]);
+  
   const getSelectColor = (val) => {
     if (val === "") return "bg-gray-100 text-gray-700";
     const ind = subjects.indexOf(val);
