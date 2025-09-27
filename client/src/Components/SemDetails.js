@@ -1,8 +1,9 @@
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 export default function SemDetails() {
+    const navigate=useNavigate();
     const [selected, setSelected] = useState(new Date());
     const handleSubmit=()=>{
         if(!selected){
@@ -14,7 +15,10 @@ export default function SemDetails() {
         let leftOverDays=days%30;
 
         if(months>=7 || (months===6 && leftOverDays!==0)) alert(`Not Possible`);
-        else alert(`Possible`)
+        else{
+            sessionStorage.setItem("date",selected);
+            navigate("/aitimetable")
+        }
     }
     return (
         <div className="h-screen flex flex-col justify-center items-center bg-gray-800 space-y-12">

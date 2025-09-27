@@ -24,6 +24,8 @@ export default function AiTimeTableInit() {
     });
     setloading(false);
     const data = await response.json();
+        console.log(data);
+
     if (!data.response || Object.keys(data.response).length === 0) alert("Enter A Valid TimeTable File");
     else {
       sessionStorage.setItem("prevtimetable", JSON.stringify(data.response));
