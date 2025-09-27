@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 export default function TimeTable() {
   const navigate = useNavigate();
-  const [TimeTable, setTimeTable] = useState(Array.from({ length: 6 }, () => Array(8).fill("")));
+  const [TimeTable, setTimeTable] = useState(Array.from({ length: 6 }, () => Array(7).fill("")));
   const Days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const [subjects, setSubjects] = useState(Array(10).fill(""));
   const colors = [
@@ -40,7 +40,7 @@ export default function TimeTable() {
         DaysInd.set(Days[i].toUpperCase(), i);
       }
       const newSubjects = new Set();
-      let NewTimeTableState = Array.from({ length: 6 }, () => Array(8).fill(""));
+      let NewTimeTableState = Array.from({ length: 6 }, () => Array(7).fill(""));
       for (let [day, dayperiods] of Object.entries(oldTimeTable)) {
         const dayind = DaysInd.get(day);
         for (let period in dayperiods) {
@@ -78,7 +78,6 @@ export default function TimeTable() {
             <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 5 </th>
             <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 6 </th>
             <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 7 </th>
-            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 8 </th>
           </tr>
           {TimeTable.map((row, rInd) => (
             <tr key={rInd}>
@@ -94,6 +93,7 @@ export default function TimeTable() {
                   </select>
                 </td>
               ))}
+              
             </tr>
           ))}
         </table>
