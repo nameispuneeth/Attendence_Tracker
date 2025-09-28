@@ -70,18 +70,19 @@ export default function TimeTable() {
       <div className="overflow-x-auto max-w-full">
         <table className="border-2 border-collapse border-gray-400 rounded min-w-max">
           <tr>
-            <th className="border border-gray-400 w-32 h-16 bg-gray-700 text-white"> Day/Period </th>
-            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 1 </th>
-            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 2 </th>
-            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 3 </th>
-            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 4 </th>
-            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 5 </th>
-            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 6 </th>
-            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white"> Period - 7 </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-700 text-white p-4 font-extrabold"> Day/Period </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white p-4 font-extrabold"> 8:30 - 9:30 </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white p-4 font-extrabold"> 9:30 - 10:30 </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white p-4 font-extrabold"> 10:40 - 11:40 </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white p-4 font-extrabold"> 11:40 - 12:40 </th>
+            <th rowSpan={7} class="[writing-mode:vertical-rl] [text-orientation:upright] font-light bg-gray-100 text-gray-900 text-xl">Lunch Break</th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white p-4 font-extrabold"> 1:40 - 2:40 </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white p-4 font-extrabold"> 2:40 - 3:40 </th>
+            <th className="border border-gray-400 w-32 h-16 bg-gray-800 text-white p-4 font-extrabold"> 3:40 - 4:40 </th>
           </tr>
           {TimeTable.map((row, rInd) => (
             <tr key={rInd}>
-              <td key={rInd} className="border border-gray-400 w-32 h-16 text-center font-medium bg-gray-800 text-white">{Days[rInd]}</td>
+              <td key={rInd} className="border border-gray-400 w-32 h-16 text-center font-bold bg-gray-800 text-white">{Days[rInd]}</td>
               {row.map((val, cInd) => (
                 <td key={cInd} className={`border w-32 h-16 text-center font-normal ${getSelectColor(val)} border-gray-400`}>
                   <select value={val} onChange={(e) => ChangeVal(rInd, cInd, e.target.value)} key={cInd} className={`w-full h-full text-center bg-transparent appearance-none outline-none border-0`}>
@@ -98,7 +99,7 @@ export default function TimeTable() {
           ))}
         </table>
       </div>
-      <button className="bg-gray-600 text-white px-5 py-3 rounded text-base font-medium hover:bg-gray-700" onClick={() => handleSubmit()}>Submit</button>
+      <button className="bg-gray-100 text-gray-900 px-5 py-3 rounded text-base font-medium shadow-2xl hover:bg-gray-200" onClick={() => handleSubmit()}>Submit</button>
     </div>
   )
 }
