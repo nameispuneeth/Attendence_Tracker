@@ -5,6 +5,7 @@ import Subjects from './Components/Subjects';
 import TimeTable from "./Components/TimeTable";
 import ReqAttendence from './Components/ReqAttendence';
 import CurrAttendence from './Components/CurrAttendence';
+import UserHome from './Components/UserHome';
 export default function App(){
   return(
     <BrowserRouter>
@@ -15,6 +16,7 @@ export default function App(){
           <Route path="/manually" element={<Subjects/>}></Route>
           <Route path="/requirement" element={<ReqAttendence/>}></Route>
           <Route path="/currattendence" element={<CurrAttendence/>}></Route>
+          <Route path="/userhome" element={<UserHome/>}></Route>
       </Routes>
     </BrowserRouter>
   )

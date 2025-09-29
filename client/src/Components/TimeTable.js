@@ -26,6 +26,7 @@ export default function TimeTable() {
       )
     )
   }
+  console.log(TimeTable)
   const handleSubmit = () => {
     sessionStorage.setItem("timetable", JSON.stringify(TimeTable));
     navigate("/currattendence");

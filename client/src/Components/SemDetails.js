@@ -16,7 +16,7 @@ export default function SemDetails() {
 
         if(months>=7 || (months===6 && leftOverDays!==0)) alert(`Not Possible`);
         else{
-            sessionStorage.setItem("date",selected);
+            sessionStorage.setItem("date",JSON.stringify(selected));
             navigate("/aitimetable")
         }
     }
