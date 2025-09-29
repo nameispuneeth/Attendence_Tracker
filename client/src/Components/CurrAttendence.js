@@ -6,7 +6,7 @@ export default function CurrAttendence() {
     const [loading, setloading] = useState(false);
     const [subClasses,setSubClasses]=useState([]);
     let HandleSubmit=()=>{
-        sessionStorage.setItem("attendence",subClasses);
+        sessionStorage.setItem("attendence",JSON.stringify(subClasses));
         navigate("/requirement")
     }
     let Spinner = () => {
@@ -34,7 +34,6 @@ export default function CurrAttendence() {
             mp.forEach((val,key)=>{
                 tempArr.push([key,val*weeks,val*weeks]);
             })
-            console.log(tempArr);
             setSubClasses(tempArr)
 
         }else{

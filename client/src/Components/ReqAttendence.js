@@ -1,7 +1,9 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 export default function ReqAttendence() {
     const [num, setnum] = useState(75);
-
+    const [overall,setoverall]=useState(true);
+    const navigate=useNavigate();
     return (
         <div className="h-screen bg-gray-900 flex flex-col justify-center items-center space-y-12">
             <div className="flex flex-col justify-center items-center space-y-10">
@@ -19,15 +21,22 @@ export default function ReqAttendence() {
             </div>
             <div className="flex space-x-10">
                 <div className="flex space-x-2">
-                    <input type="radio" name="attendence_type" className="cursor-pointer" defaultChecked />
+                    <input type="radio" name="attendence_type" className="cursor-pointer" defaultChecked onChange={()=>setoverall(true)} />
                     <p className="text-white font-medium text-lg">Overall</p>
                 </div>
                 <div className="flex space-x-2">
-                    <input type="radio" name="attendence_type" className="cursor-pointer" />
+                    <input type="radio" name="attendence_type" className="cursor-pointer" onChange={()=>setoverall(false)} />
                     <p className="text-white font-medium text-lg">Per Subject</p>
                 </div>
             </div>
-            <button className="text-gray-900 border border-gray-300 bg-gray-300 shadow-lg px-5 py-3 text-lg rounded font-semibold">Submit</button>
+            <button className="text-gray-900 border border-gray-300 bg-gray-300 shadow-lg px-5 py-3 text-lg rounded font-semibold" onClick={()=>{
+                const requirements={
+                    reqAttendence:num,
+                    overall:overall
+                }
+                sessionStorage.setItem("requirement",JSON.stringify(requirements));
+                navigate("/userhome")
+            }}>Submit</button>
         </div>
     )
 }

@@ -12,9 +12,8 @@ export default function SemDetails() {
         }
         let days=Math.floor((new Date()-selected)/(1000*60*60*24));
         let months=Math.floor(days/30);
-        let leftOverDays=days%30;
 
-        if(months>=7 || (months===6 && leftOverDays!==0)) alert(`Not Possible`);
+        if(months>=6) alert(`Not Possible`);
         else{
             sessionStorage.setItem("date",JSON.stringify(selected));
             navigate("/aitimetable")
