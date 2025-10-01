@@ -64,9 +64,7 @@ app.post("/api/getData", upload.single("file"), async (req, res) => {
 let rawText = "";
 for await (const chunk of chatCompletion) {
   rawText += chunk.choices[0]?.delta?.content || '';
-  console.log(chunk.choices[0]?.delta?.content);
 }
-console.log(rawText);
 rawText = rawText.replace(/```json|```/g, "").trim();
 let jsonResponse;
 try {

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import React from "react";
 export default function CurrAttendence() {
     const navigate = useNavigate();
     const [loading, setloading] = useState(false);
-    const [subClasses,setSubClasses]=useState([]);
-    let HandleSubmit=()=>{
-        sessionStorage.setItem("attendence",JSON.stringify(subClasses));
+    const [subClasses, setSubClasses] = useState([]);
+    let HandleSubmit = () => {
+        sessionStorage.setItem("attendence", JSON.stringify(subClasses));
         navigate("/requirement")
     }
     let Spinner = () => {
@@ -16,50 +16,77 @@ export default function CurrAttendence() {
             </div>
         );
     }
-    
-    useEffect(()=>{
-        if(sessionStorage.getItem("timetable") && sessionStorage.getItem("date")){
-            const timetable=JSON.parse(sessionStorage.getItem("timetable"));
+
+    useEffect(() => {
+        if (sessionStorage.getItem("timetable") && sessionStorage.getItem("date")) {
+            const timetable = JSON.parse(sessionStorage.getItem("timetable"));
             console.log(timetable)
-            const startDate=new Date(JSON.parse(sessionStorage.getItem("date")));
-            const weeks=Math.ceil((new Date()-startDate)/(1000*60*60*24*7));
-            const mp=new Map();
-            timetable.map((row,i)=>{
-                row.map((val,j)=>{
-                    const prevVal=mp.get(val) || 0;
-                    if(val!="") mp.set(val,prevVal+1);
+            const startDate = new Date(JSON.parse(sessionStorage.getItem("date")));
+            const weeks = Math.ceil((new Date() - startDate) / (1000 * 60 * 60 * 24 * 7));
+            const mp = new Map();
+            timetable.map((row, i) => {
+                row.map((val, j) => {
+                    const prevVal = mp.get(val) || 0;
+                    if (val != "") mp.set(val, prevVal + 1);
                 })
             })
-            const tempArr=[];
-            mp.forEach((val,key)=>{
-                tempArr.push([key,val*weeks,val*weeks]);
+            const tempArr = [];
+            mp.forEach((val, key) => {
+                tempArr.push([key, val * weeks, val * weeks]);
             })
             setSubClasses(tempArr)
 
-        }else{
+        } else {
             alert("TimeTable Required");
             return;
         }
-    },[])
+    }, [])
     return (
-        <div className="relative min-h-screen bg-gray-900 flex flex-col justify-center items-center text-white space-y-10">
-            {loading && Spinner()}
-            <p className="font-extrabold text-3xl text-wrap text-center">Your Current Attendance Percentage : </p>
-            {subClasses.map((row,rInd)=>(
-                <div className="flex space-x-5 items-center justify-center" key={rInd}>
-                <p className="text-xl font-extrabold"> {row[0]} :  </p>
-                <input type="number" className="no-spinner text-black h-12 w-20 text-center" value={row[1]} onChange={(e)=>{
-                    let val=e.target.value;
-                    if(e.target.value=="") val=0;
-                    if(e.target.value<=row[2]){
-                        setSubClasses(subClasses.map((r,rind)=>(rind==rInd)?[r[0],val,r[2]]:r))
-                    }
-                }}></input>
-                <p className="font-medium">Of</p>
-                <input type="number" className="no-spinner text-black h-12 w-20 text-center" value={row[2]}></input>
+        <div className="min-h-screen bg-[radial-gradient(circle_at_center,#2c2c2c,#0d0d0d)] flex flex-col justify-center items-center">
+            <div className="w-full max-w-lg bg-[rgba(0,0,0,0.2)] p-5 rounded-xl shadow-lg text-white">
+                <p className="text-center mb-12 text-2xl font-extrabold">Current Attendence</p>
+                <div className="grid grid-cols-5 gap-4 items-center">
+                    {subClasses.map((row, rInd) => (
+                        <React.Fragment key={rInd}>
+                            <p className="text-lg font-extrabold">{row[0]} </p>
+                            <p className="text-xl">:</p>
+
+                            <input
+                                type="number"
+                                className="no-spinner text-black h-12 w-full text-center rounded"
+                                value={row[1]}
+                                onChange={(e) => {
+                                    let val = e.target.value === "" ? 0 : e.target.value;
+                                    if (val <= row[2]) {
+                                        setSubClasses(
+                                            subClasses.map((r, rind) =>
+                                                rind === rInd ? [r[0], val, r[2]] : r
+                                            )
+                                        );
+                                    }
+                                }}
+                            />
+
+                            <p className="text-center font-medium">Of</p>
+
+                            <input
+                                type="number"
+                                className="no-spinner text-black h-12 w-full text-center rounded"
+                                value={row[2]}
+                                readOnly
+                            />
+                        </React.Fragment>
+                    ))}
+                </div>
+
+                <button
+                    className="mt-8 bg-black px-6 py-4 rounded-lg shadow-xl hover:bg-[rgba(31,31,31,1)] font-medium text-gray-200 w-full"
+                    onClick={HandleSubmit}
+                >
+                    Submit
+                </button>
             </div>
-            ))}
-            <button className="border border-gray-300 bg-gray-200 px-5 py-2 rounded-lg shadow-xl hover:bg-gray-300 font-medium text-gray-800 " onClick={()=>HandleSubmit()}>Submit</button>
+
         </div>
     )
 }

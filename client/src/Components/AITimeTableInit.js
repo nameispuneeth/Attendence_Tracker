@@ -34,11 +34,13 @@ export default function AiTimeTableInit() {
 
   }
   return (
-    <div className="relative h-screen bg-gray-900 flex justify-center items-center flex-col space-y-10">
+    <div className="bg-[radial-gradient(circle_at_center,#2c2c2c,#0d0d0d)] flex flex-col justify-center items-center min-h-screen text-white p-6 overflow-hidden" >
+            <div className="rounded-2xl shadow-lg p-10 w-full max-w-lg bg-[rgba(0,0,0,0.2)]">
+    <div className="relative flex justify-center items-center flex-col space-y-10">
       {loading && Spinner()}
       <form
         onSubmit={HandleSubmit}
-        className="flex flex-col space-y-6 bg-gray-100 p-6 rounded-2xl shadow-md"
+        className="flex flex-col space-y-6 bg-[rgba(0,0,0,0.3)] p-6 rounded-2xl shadow-md"
       >
         <input
           type="file"
@@ -48,15 +50,15 @@ export default function AiTimeTableInit() {
                      file:mr-4 file:py-2 file:px-4
                      file:rounded-lg file:border-0
                      file:text-sm file:font-semibold
-                     file:bg-blue-600 file:text-white
-                     hover:file:bg-blue-700 cursor-pointer"
+                     file:bg-gray-700 file:text-white
+                     hover:file:bg-gray-600 cursor-pointer"
         />
 
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-green-600 text-white 
+          className="w-full py-2 px-4 bg-gray-800 text-white 
                      rounded-lg font-medium shadow-md
-                     hover:bg-green-700 transition duration-200"
+                     hover:bg-gray-700 transition duration-200"
         >
           Upload & Analyze
         </button>
@@ -67,7 +69,10 @@ export default function AiTimeTableInit() {
         <div className="border-t-2 w-32 mt-3"></div>
       </div>
 
-      <p className="text-white font-bold text-sm px-6 py-3 border border-green-700 bg-green-700 rounded-lg shadow-md cursor-pointer hover:bg-green-800 hover:shadow-2xl" onClick={() => navigate("/manually")}>Enter Manually</p>
+      <p className="text-white font-bold text-sm px-6 py-3 border border-gray-800 bg-gray-800 rounded-lg shadow-md cursor-pointer hover:bg-gray-700 hover:shadow-2xl" onClick={() => navigate("/manually")}>Enter Manually</p>
     </div>
+    </div>
+    </div>
+
   )
 }
