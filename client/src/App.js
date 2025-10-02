@@ -8,6 +8,7 @@ import CurrAttendence from './Components/CurrAttendence';
 import UserHome from './Components/UserHome';
 import SignIn from './Components/Auth/signin';
 import SignUp from './Components/Auth/signup';
+import ErrorPage from './Components/404error';
 export default function App(){
   return(
     <BrowserRouter>
@@ -21,6 +22,8 @@ export default function App(){
           <Route path="/requirement" element={<ReqAttendence/>}></Route>
           <Route path="/currattendence" element={<CurrAttendence/>}></Route>
           <Route path="/userhome" element={<UserHome/>}></Route>
+                    <Route path="*" element={<ErrorPage/>}></Route>
+
       </Routes>
     </BrowserRouter>
   )
