@@ -12,7 +12,7 @@ export default function CurrAttendence() {
     let Spinner = () => {
         return (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div className="w-12 h-12 border-4 border-white border-t-blue-500 rounded-full animate-spin"></div>
+                <div className="w-12 h-12 border-4 border-white border-t-gray-700 rounded-full animate-spin"></div>
             </div>
         );
     }
@@ -43,7 +43,7 @@ export default function CurrAttendence() {
     }, [])
     return (
         <div className="min-h-screen bg-[radial-gradient(circle_at_center,#2c2c2c,#0d0d0d)] flex flex-col justify-center items-center">
-            <div className="w-full max-w-lg bg-[rgba(0,0,0,0.2)] p-5 rounded-xl shadow-lg text-white">
+            <div className="w-full max-w-lg bg-[rgba(0,0,0,0.4)] p-5 rounded-xl shadow-lg text-white">
                 <p className="text-center mb-12 text-2xl font-extrabold">Current Attendence</p>
                 <div className="grid grid-cols-5 gap-4 items-center">
                     {subClasses.map((row, rInd) => (
@@ -73,7 +73,16 @@ export default function CurrAttendence() {
                                 type="number"
                                 className="no-spinner text-black h-12 w-full text-center rounded"
                                 value={row[2]}
-                                readOnly
+                                 onChange={(e) => {
+                                    let val = e.target.value === "" ? 0 : e.target.value;
+                                    if (val >= row[1]) {
+                                        setSubClasses(
+                                            subClasses.map((r, rind) =>
+                                                rind === rInd ? [r[0], r[1], val] : r
+                                            )
+                                        );
+                                    }
+                                }}
                             />
                         </React.Fragment>
                     ))}

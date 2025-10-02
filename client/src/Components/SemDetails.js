@@ -21,7 +21,7 @@ export default function SemDetails() {
     }
     return (
         <div className="min-h-screen bg-[radial-gradient(circle_at_center,#2c2c2c,#0d0d0d)] flex flex-col justify-center items-center">
-            <div className="rounded-2xl shadow-lg w-full max-w-md bg-[rgba(0,0,0,0.2)] p-10">
+            <div className="rounded-2xl shadow-lg w-full max-w-lg bg-[rgba(0,0,0,0.4)] p-10">
                 <div className="flex flex-col justify-center items-center space-y-12">
                     <p className="text-white font-extrabold text-2xl text-center break-words">When Will Semester Start?</p>
                     <div className="border-2 border-white p-8 rounded-lg space-y-8">
@@ -41,7 +41,7 @@ export default function SemDetails() {
                         </p>
                     </div>
                     <button
-                        className="bg-[rgba(0,0,0,0.4)] text-base font-semibold text-white px-10 py-4 rounded-md text-md"
+                        className="bg-[rgba(50,50,50,1)] text-base font-semibold text-white px-10 py-4 rounded-md text-md"
                         onClick={handleSubmit}
                     >
                         Submit

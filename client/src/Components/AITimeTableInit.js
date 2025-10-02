@@ -5,7 +5,7 @@ export default function AiTimeTableInit() {
   let Spinner = () => {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="w-12 h-12 border-4 border-white border-t-blue-500 rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-white border-t-gray-700 rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -35,7 +35,7 @@ export default function AiTimeTableInit() {
   }
   return (
     <div className="bg-[radial-gradient(circle_at_center,#2c2c2c,#0d0d0d)] flex flex-col justify-center items-center min-h-screen text-white p-6 overflow-hidden" >
-            <div className="rounded-2xl shadow-lg p-10 w-full max-w-lg bg-[rgba(0,0,0,0.2)]">
+            <div className="rounded-2xl shadow-lg p-10 w-full max-w-lg bg-[rgba(0,0,0,0.4)]">
     <div className="relative flex justify-center items-center flex-col space-y-10">
       {loading && Spinner()}
       <form

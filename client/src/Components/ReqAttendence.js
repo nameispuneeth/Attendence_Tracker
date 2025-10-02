@@ -6,7 +6,7 @@ export default function ReqAttendence() {
     const navigate = useNavigate();
     return (
         <div className="h-screen bg-[radial-gradient(circle_at_center,#2c2c2c,#0d0d0d)] flex flex-col justify-center items-center">
-            <div className="rounded-2xl shadow-lg p-5 w-full max-w-lg bg-[rgba(0,0,0,0.2)]">
+            <div className="rounded-2xl shadow-lg p-5 w-full max-w-lg bg-[rgba(0,0,0,0.4)]">
                 <div className="flex flex-col justify-center items-center space-y-8">
                     <p className="text-gray-200 break-words text-2xl text-center font-extrabold">Enter Your Required Attendence Percentage : </p>
                     <input type="number" max={100} value={num} onChange={(e) => {
@@ -30,7 +30,7 @@ export default function ReqAttendence() {
                             <p className="text-white font-medium text-lg">Per Subject</p>
                         </div>
                     </div>
-                    <button className="text-white border border-[rgba(0,0,0,1)] bg-[rgba(0,0,0,0.5)] shadow-lg px-5 py-3 text-base rounded-lg font-semibold flex justify-center" onClick={() => {
+                    <button className="text-white border border-[rgba(40,40,40,1)] bg-[rgba(40,40,40,1)] shadow-lg px-5 py-3 text-base rounded-lg font-semibold flex justify-center" onClick={() => {
                         const requirements = {
                             reqAttendence: num,
                             overall: overall

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default function UserHome() {
     const navigate = useNavigate()
     const [remainingClasses, setremainingClasses] = useState([]);
-
+    const [CurrAttendence,setCurrAttendence]=useState(75.000);
     const [needToAttend, setneedtoAttend] = useState([["OverAll", 101, 404]]);
     useEffect(() => {
         let weeks = 0;
@@ -12,7 +12,7 @@ export default function UserHome() {
         const requirements = JSON.parse(sessionStorage.getItem("requirement"));
         const timetable = JSON.parse(sessionStorage.getItem("timetable"));
         const startDate = new Date(JSON.parse(sessionStorage.getItem("date")));
-
+        
         if(!currattendence || !requirements || !timetable || !startDate){
             navigate("/");
             return;
@@ -20,7 +20,7 @@ export default function UserHome() {
             
         const temp = new Date() - startDate;
         const currWeeks = Math.floor(temp / (1000 * 60 * 60 * 24 * 7));
-        weeks = 21 - currWeeks;
+        weeks = 19 - currWeeks;
         let mp = new Map();
         timetable.forEach((row, i) => {
             row.forEach((val, j) => {
@@ -28,18 +28,21 @@ export default function UserHome() {
                 if (val != "") mp.set(val, prevVal + 1);
             })
         })
-        console.log(startDate, currWeeks, weeks)
         const tempArr = []
         let totalClasses = 0;
         let totalclassesAttended = 0;
         let remainingClassesInSemester = 0;
+        let CurrTemp=0;
         currattendence.forEach((row, ind) => {
+            CurrTemp+=(parseInt(row[1])/row[2])*100;
             let classesInWeek = mp.get(row[0]) || 0;
-            totalClasses += (21 * classesInWeek);
+            totalClasses += (19 * classesInWeek);
             remainingClassesInSemester += (weeks * classesInWeek);
             totalclassesAttended += parseInt(row[1]);
-            tempArr.push([row[0], parseInt(row[1]), 21 * classesInWeek, weeks * classesInWeek]);
+            tempArr.push([row[0], parseInt(row[1]), 19 * classesInWeek, weeks * classesInWeek]);
         })
+        console.log(remainingClassesInSemester,totalclassesAttended,);
+        setCurrAttendence((CurrTemp/mp.size).toFixed(5))
         let requiredClasses = 0;
         if (requirements.overall === true) {
             requiredClasses = Math.ceil((requirements.reqAttendence / 100) * (totalClasses));
@@ -63,10 +66,12 @@ export default function UserHome() {
     }, [])
     return (
         <div className="bg-[radial-gradient(circle_at_center,#2c2c2c,#0d0d0d)] flex flex-col justify-center items-center min-h-screen text-white p-6 overflow-hidden" >
-            <div className="rounded-2xl shadow-lg p-10 w-full max-w-md bg-[rgba(0,0,0,0.2)]">
+            <div className="rounded-2xl shadow-lg p-10 w-full max-w-md bg-[rgba(0,0,0,0.4)]">
                 <h2 className="text-3xl font-extrabold text-center mb-6 text-gray-300 ">
                     Attendance Summary
                 </h2>
+                <p className="text-base font-bold mb-5 mt-5 text-center">Your Current Attendence is : {CurrAttendence}% </p>
+
                 <div className="space-y-4">
                     {needToAttend.map((row, ind) => (
                         <div
