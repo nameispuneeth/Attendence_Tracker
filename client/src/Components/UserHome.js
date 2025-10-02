@@ -20,7 +20,7 @@ export default function UserHome() {
             
         const temp = new Date() - startDate;
         const currWeeks = Math.floor(temp / (1000 * 60 * 60 * 24 * 7));
-        weeks = 19 - currWeeks;
+        weeks = 17 - currWeeks;
         let mp = new Map();
         timetable.forEach((row, i) => {
             row.forEach((val, j) => {
@@ -34,14 +34,15 @@ export default function UserHome() {
         let remainingClassesInSemester = 0;
         let CurrTemp=0;
         currattendence.forEach((row, ind) => {
-            CurrTemp+=(parseInt(row[1])/row[2])*100;
+            CurrTemp+=(parseInt(row[1])/parseInt(row[2]))*100;
             let classesInWeek = mp.get(row[0]) || 0;
-            totalClasses += (19 * classesInWeek);
+            let totalClassesOfSub=(weeks * classesInWeek)+parseInt(row[2]);
+            totalClasses += totalClassesOfSub;
             remainingClassesInSemester += (weeks * classesInWeek);
             totalclassesAttended += parseInt(row[1]);
-            tempArr.push([row[0], parseInt(row[1]), 19 * classesInWeek, weeks * classesInWeek]);
+            tempArr.push([row[0], parseInt(row[1]), totalClassesOfSub, weeks * classesInWeek]);
         })
-        console.log(remainingClassesInSemester,totalclassesAttended,);
+        console.log(remainingClassesInSemester,totalclassesAttended,totalClasses);
         setCurrAttendence((CurrTemp/mp.size).toFixed(5))
         let requiredClasses = 0;
         if (requirements.overall === true) {
@@ -55,6 +56,7 @@ export default function UserHome() {
                 let subject = row[0];
                 let totalClassesSub = row[2];
                 let AttendedClassesSub = row[1];
+                console.log(row[0],totalClassesSub,AttendedClassesSub);
                 let requiredClassesSub = Math.ceil((requirements.reqAttendence / 100) * (totalClassesSub));
                 requiredClassesSub -= AttendedClassesSub;
                 if (requiredClassesSub > totalClassesSub) alert(`${subject} Class Is Not Possible`);
@@ -86,7 +88,7 @@ export default function UserHome() {
                     ))}
                 </div>
 
-                <button className="p-4 font-bold rounded-lg block mx-auto mt-10 mb-0 transition bg-[rgba(0,0,0,0.9)] hover:bg-[rgba(0,0,0,0.3)] text-white shadow-md" onClick={() => navigate("/requirement")}>
+                <button className="p-4 font-bold rounded-lg block mx-auto mt-10 mb-0 transition bg-[rgba(40,40,40,0.9)] hover:bg-[rgba(60,60,60,1)] text-white shadow-md" onClick={() => navigate("/requirement")}>
                     Change Requirement
                 </button>
             </div>
