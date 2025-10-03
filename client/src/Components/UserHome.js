@@ -42,7 +42,6 @@ export default function UserHome() {
             totalclassesAttended += parseInt(row[1]);
             tempArr.push([row[0], parseInt(row[1]), totalClassesOfSub, weeks * classesInWeek]);
         })
-        console.log(remainingClassesInSemester,totalclassesAttended,totalClasses);
         setCurrAttendence((CurrTemp/mp.size).toFixed(5))
         let requiredClasses = 0;
         if (requirements.overall === true) {
@@ -56,7 +55,6 @@ export default function UserHome() {
                 let subject = row[0];
                 let totalClassesSub = row[2];
                 let AttendedClassesSub = row[1];
-                console.log(row[0],totalClassesSub,AttendedClassesSub);
                 let requiredClassesSub = Math.ceil((requirements.reqAttendence / 100) * (totalClassesSub));
                 requiredClassesSub -= AttendedClassesSub;
                 if (requiredClassesSub > totalClassesSub) alert(`${subject} Class Is Not Possible`);

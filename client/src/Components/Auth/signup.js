@@ -1,6 +1,8 @@
 import { Circle, CircleCheck } from "lucide-react"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 export default function SignUp() {
+    const navigate=useNavigate();
     const [username, setusername] = useState('');
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
@@ -32,14 +34,46 @@ export default function SignUp() {
         setcontainsSymbol(symbols);
         setContainsAlphabets(capitals && smalls)
     }
+
+    let handleSubmit=async()=>{
+        if(!username){
+            alert("UserName Is Required");
+            return;
+        }else if(!email){
+            alert("Email Is Required");
+            return;
+        }
+        if(password.length<5 || !containsAlphabets || !containsDigit || !containsSymbol){
+            alert("Password Doesn't Meet Requirements");
+            return;
+        }
+        const res=await fetch("http://localhost:8000/api/signup",{
+            method:"POST",
+             headers: {
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({
+                username:username,
+                email:email,
+                password:password
+            })
+        })
+        const data=await res.json();
+        if(data.status=="ok"){
+            navigate("/signin");
+        }else{
+            alert(`${data.error}`);
+        }
+    }
+
     return (
         <div className="bg-[radial-gradient(circle_at_center,#2c2c2c,#0d0d0d)] flex flex-col justify-center items-center min-h-screen text-white p-6 overflow-hidden" >
                         {loading && <Spinner/>}
 
             <div className="rounded-2xl shadow-lg p-10 w-full max-w-md bg-[rgba(0,0,0,0.4)] space-y-10">
                 <p className="text-center font-extrabold text-4xl mb-6">REGISTER</p>
-                <input type="text" className="w-full h-12 rounded-lg bg-[rgba(50,50,50,1)] text-center text-lg font-light" placeholder="Enter Your Name" value={username} onChange={(e) => setusername(e.target.value)}></input>
-                <input type="email" className="w-full h-12 rounded-lg bg-[rgba(50,50,50,1)] text-center text-lg font-light" placeholder="Enter Your Email" value={email} onChange={(e) => setemail(e.target.value)}></input>
+                <input type="text" className="w-full h-12 rounded-lg bg-[rgba(50,50,50,1)] text-center text-lg font-light" placeholder="Enter Your Name" value={username} onChange={(e) => setusername(e.target.value)} required></input>
+                <input type="email" className="w-full h-12 rounded-lg bg-[rgba(50,50,50,1)] text-center text-lg font-light" placeholder="Enter Your Email" value={email} onChange={(e) => setemail(e.target.value)} required></input>
                 <div>
                     <input type="password" className="w-full h-12 rounded-lg bg-[rgba(50,50,50,1)] text-center text-lg font-light" placeholder="Enter Your Password" value={password} onChange={(e) =>handlePWDChange(e)}></input>
                     <div className="text-sm font-light mt-5">
@@ -61,7 +95,12 @@ export default function SignUp() {
                         </div>
                     </div>
                 </div>
-                <button className="w-full h-14 rounded-lg bg-[#232121] border-2 border-gray-600 text-center text-lg font-bold">Register</button>
+                <div className="space-y-5">
+                    <button className="w-full h-14 rounded-lg bg-[#232121] border-2 border-gray-600 text-center text-lg font-bold" onClick={()=>handleSubmit()}>Register</button>
+                <span className="flex gap-2 text-center justify-center text-sm">Already Have An Account ?  
+                    <p className="font-bold cursor-pointer" onClick={()=>navigate("/signin")}> Login</p>
+                </span>
+                </div>
             </div>
         </div>
     )

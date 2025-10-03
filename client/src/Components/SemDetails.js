@@ -10,6 +10,7 @@ export default function SemDetails() {
             alert("Date Is Required");
             return;
         }
+        
         let days = Math.floor((new Date() - selected) / (1000 * 60 * 60 * 24));
         let months = Math.floor(days / 30);
 

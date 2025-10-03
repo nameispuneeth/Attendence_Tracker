@@ -20,9 +20,9 @@ export default function CurrAttendence() {
     useEffect(() => {
         if (sessionStorage.getItem("timetable") && sessionStorage.getItem("date")) {
             const timetable = JSON.parse(sessionStorage.getItem("timetable"));
-            console.log(timetable)
             const startDate = new Date(JSON.parse(sessionStorage.getItem("date")));
             const weeks = Math.ceil((new Date() - startDate) / (1000 * 60 * 60 * 24 * 7));
+            const OccuredWeeks=[0,1,2,3,4,5,6,7,8,9,9,9,10,11,11,12,13,14,15,16];
             const mp = new Map();
             timetable.map((row, i) => {
                 row.map((val, j) => {
@@ -30,9 +30,10 @@ export default function CurrAttendence() {
                     if (val != "") mp.set(val, prevVal + 1);
                 })
             })
+            console.log(weeks,OccuredWeeks[weeks])
             const tempArr = [];
             mp.forEach((val, key) => {
-                tempArr.push([key, val * weeks, val * weeks]);
+                tempArr.push([key, val * OccuredWeeks[weeks], val * OccuredWeeks[weeks]]);
             })
             setSubClasses(tempArr)
 
@@ -44,7 +45,7 @@ export default function CurrAttendence() {
     return (
         <div className="min-h-screen bg-[radial-gradient(circle_at_center,#2c2c2c,#0d0d0d)] flex flex-col justify-center items-center">
             <div className="w-full max-w-lg bg-[rgba(0,0,0,0.4)] p-5 rounded-xl shadow-lg text-white">
-                <p className="text-center mb-12 text-2xl font-extrabold">Current Attendence</p>
+                <p className="text-center mb-12 text-3xl font-extrabold">Current Attendence</p>
                 <div className="grid grid-cols-5 gap-4 items-center">
                     {subClasses.map((row, rInd) => (
                         <React.Fragment key={rInd}>
