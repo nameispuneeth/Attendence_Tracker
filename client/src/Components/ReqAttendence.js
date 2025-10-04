@@ -34,7 +34,7 @@ export default function ReqAttendence() {
                         const requirements = {
                             reqAttendence: num,
                             overall: overall
-                        }
+                        } 
                         sessionStorage.setItem("requirement", JSON.stringify(requirements));
                         navigate("/userhome")
                     }}>Submit</button>
