@@ -13,7 +13,6 @@ export default function SemDetails() {
         
         let days = Math.floor((new Date() - selected) / (1000 * 60 * 60 * 24));
         let months = Math.floor(days / 30);
-
         if (months >= 6) alert(`Not Possible`);
         else {
             sessionStorage.setItem("date", JSON.stringify(selected));
@@ -24,7 +23,7 @@ export default function SemDetails() {
         <div className="min-h-screen bg-[radial-gradient(circle_at_center,#2c2c2c,#0d0d0d)] flex flex-col justify-center items-center">
             <div className="rounded-2xl shadow-lg w-full max-w-lg bg-[rgba(0,0,0,0.4)] p-10">
                 <div className="flex flex-col justify-center items-center space-y-12">
-                    <p className="text-white font-extrabold text-2xl text-center break-words">When Will Semester Start?</p>
+                    <p className="text-white font-extrabold text-2xl text-center break-words">Select Your Semester Start Date </p>
                     <div className="border-2 border-white p-8 rounded-lg space-y-8">
                         <DayPicker
                             mode="single"

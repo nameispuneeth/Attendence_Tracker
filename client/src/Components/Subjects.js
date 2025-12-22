@@ -5,6 +5,18 @@ export default function Subjects() {
     const navigate = useNavigate();
     const [cnt, setCnt] = useState(3);
     const [subjects, setSubjects] = useState(["Maths", "Physics", "Social"]);
+    const handleSubmit=()=>{
+        for(let el of subjects){
+            console.log(el);
+            if(el===""){
+                alert("Subject Names Can't Be Empty");
+                return;
+            }
+        }
+        sessionStorage.setItem("subjects", JSON.stringify(subjects));
+        navigate("/timetable");
+        
+    }
     return (
         <div className="min-h-screen bg-[radial-gradient(circle_at_center,#2c2c2c,#0d0d0d)] flex flex-col items-center">
             <div className="w-full max-w-lg bg-[rgba(0,0,0,0.4)] p-5 rounded-xl shadow-lg text-white space-y-8 mt-6 flex flex-col justify-center items-center">
@@ -40,10 +52,7 @@ export default function Subjects() {
                         </div>
                     ))}
                 </div>
-                <button className="border border-gray-300 bg-gray-200 px-6 py-3 rounded-lg shadow-xl hover:bg-gray-300 font-medium text-gray-800" onClick={() => {
-                    sessionStorage.setItem("subjects", JSON.stringify(subjects));
-                    navigate("/timetable");
-                }}> Submit </button>
+                <button className="border border-gray-300 bg-gray-200 px-6 py-3 rounded-lg shadow-xl hover:bg-gray-300 font-medium text-gray-800" onClick={() =>handleSubmit()}> Submit </button>
             </div>
         </div>
     )
